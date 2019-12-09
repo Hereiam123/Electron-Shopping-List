@@ -75,3 +75,21 @@ let mainMenuTemplate = [{
 if (process.platform == 'darwin') {
     mainMenuTemplate = [{ label: '' }, ...mainMenuTemplate]
 }
+
+//Add dev tools item if not in production
+if (process.env.NODE_ENV !== 'production') {
+    mainMenuTemplate = [...mainMenuTemplate, {
+        label: 'Developer Tools',
+        submenu: [{
+            label: 'Toggle Dev Tools',
+            accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
+            click(item, focusedWindow) {
+                focusedWindow.toggleDevTools();
+            },
+        },
+        {
+            role: 'reload'
+        }
+        ]
+    }]
+}
