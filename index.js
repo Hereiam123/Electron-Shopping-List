@@ -31,7 +31,7 @@ app.on('ready', () => {
 });
 
 //Create window for adding items
-function createAddWindow() {
+const createAddWindow = () => {
     //Create new window
     addWindow = new BrowserWindow({
         width: 300,
@@ -53,7 +53,7 @@ function createAddWindow() {
 }
 
 //Create menu template
-const mainMenuTemplate = [{
+let mainMenuTemplate = [{
     label: 'File',
     submenu: [{
         label: 'Add Item',
@@ -70,3 +70,8 @@ const mainMenuTemplate = [{
         }
     }]
 }];
+
+//If Mac, add empty object to menu
+if (process.platform == 'darwin') {
+    mainMenuTemplate = [{ label: '' }, ...mainMenuTemplate]
+}
