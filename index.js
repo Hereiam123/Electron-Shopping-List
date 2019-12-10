@@ -36,7 +36,8 @@ const createAddWindow = () => {
     addWindow = new BrowserWindow({
         width: 300,
         height: 200,
-        title: 'Add Shopping List Item'
+        title: 'Add Shopping List Item',
+        webPreferences: { nodeIntegration: true }
     });
 
     //Load html file into window
