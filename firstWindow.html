@@ -36,10 +36,14 @@
     //Clear items
     ipcRenderer.on('item:clear', () => {
         ul.innerHTML = '';
+        ul.className = '';
     });
 
     const removeItem = (e) => {
         e.target.remove();
+        if (ul.children.length == 0) {
+            ul.className = '';
+        }
     }
 
     //Clear an item
