@@ -2,7 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let mainWindow;
 let addWindow;
@@ -10,7 +10,9 @@ let addWindow;
 //Listen for app to be ready
 app.on('ready', () => {
     //Create new window
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+        webPreferences: { nodeIntegration: true }
+    });
     //Load html file into window
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'firstWindow.html'),
@@ -52,6 +54,12 @@ const createAddWindow = () => {
         addWindow = null;
     });
 }
+
+//Get item added
+ipcMain.on('item:add', (e, item) => {
+    mainWindow.webContents.send('item:add', item);
+    addWindow.close();
+});
 
 //Create menu template
 let mainMenuTemplate = [{
